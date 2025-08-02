@@ -7,7 +7,8 @@
     "build": "vite build",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "supportedBrowsers": "npx update-browserslist-db@latest && echo \"export default $(browserslist-useragent-regexp --allowHigherVersions);\" > supportedBrowsers.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
