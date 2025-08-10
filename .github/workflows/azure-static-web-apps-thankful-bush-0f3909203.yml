@@ -20,7 +20,7 @@ jobs:
           submodules: true
           lfs: false
       - name: Update browsers list
-        run: npm install --legacy-peer-deps && npm run supportedBrowsers
+        run: npm install --legacy-peer-deps
         working-directory: ./frontend
       - name: Build And Deploy
         id: builddeploy
