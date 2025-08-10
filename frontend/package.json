@@ -8,7 +8,7 @@
     "test": "vitest --run",
     "format.fix": "prettier --write .",
     "typecheck": "tsc",
-    "supportedBrowsers": "npx update-browserslist-db@latest && echo \"export default $(browserslist-useragent-regexp --allowHigherVersions);\" > supportedBrowsers.js"
+    "supportedBrowsers": "npx update-browserslist-db@latest --legacy-peer-deps && echo \"export default $(browserslist-useragent-regexp --allowHigherVersions);\" > supportedBrowsers.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
