@@ -19,14 +19,6 @@ jobs:
         with:
           submodules: true
           lfs: false
-      - name: List files in current directory
-        run: ls -la # Lists all files and directories, including hidden ones, in long format
-
-      - name: List files in a specific subdirectory
-        run: ls -la frontend/
-      - name: Update browsers list
-        run: npm install --legacy-peer-deps
-        working-directory: ./frontend
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
