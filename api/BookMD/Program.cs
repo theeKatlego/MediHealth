@@ -18,7 +18,7 @@ builder.Services.AddDbContextFactory<BookMdDbContext>(optionsBuilder =>
   optionsBuilder
     .UseCosmos(
       connectionString: builder.Configuration.GetConnectionString("DefaultConnection")!,
-      databaseName: "ApplicationDB",
+      databaseName: "BookMd",
       cosmosOptionsAction: options =>
       {
           options.ConnectionMode(Microsoft.Azure.Cosmos.ConnectionMode.Direct);
