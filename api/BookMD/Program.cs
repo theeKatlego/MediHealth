@@ -1,8 +1,6 @@
-using BookMD.Data;
+using Application;
+using BookMD.Infrastructure;
 using Microsoft.Azure.Functions.Worker.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 var builder = FunctionsApplication.CreateBuilder(args);
@@ -14,16 +12,8 @@ builder.ConfigureFunctionsWebApplication();
 //     .AddApplicationInsightsTelemetryWorkerService()
 //     .ConfigureFunctionsApplicationInsights();
 
-builder.Services.AddDbContextFactory<BookMdDbContext>(optionsBuilder =>
-  optionsBuilder
-    .UseCosmos(
-      connectionString: builder.Configuration.GetConnectionString("DefaultConnection")!,
-      databaseName: "BookMd",
-      cosmosOptionsAction: options =>
-      {
-          options.ConnectionMode(Microsoft.Azure.Cosmos.ConnectionMode.Direct);
-          options.MaxRequestsPerTcpConnection(16);
-          options.MaxTcpConnectionsPerEndpoint(32);
-      }));
+builder.Services
+    .AddApplication()
+    .AddInfrastructure(builder.Configuration);
 
 builder.Build().Run();

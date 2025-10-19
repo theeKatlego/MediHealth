@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="9.0.9" />
+    <PackageReference Include="AspNetCore.HealthChecks.CosmosDb" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.10" />
+	  <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="9.0.10" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BookMD.Application\BookMD.Application.csproj" />
+    <ProjectReference Include="..\BookMD.Data\BookMD.Data.csproj" />
   </ItemGroup>
 
 </Project>

@@ -17,7 +17,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BookMD.Data\BookMD.Data.csproj" />
+    <ProjectReference Include="..\BookMD.Infrastructure\BookMD.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
