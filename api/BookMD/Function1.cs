@@ -13,11 +13,13 @@ namespace BookMD
     {
         private readonly IBookMdDbContext _context;
         private readonly ILogger<Function1> _logger;
+        private readonly IConfiguration _configuration;
 
-        public Function1(/*IBookMdDbContext context, */ILogger<Function1> logger)
+        public Function1(/*IBookMdDbContext context, */ILogger<Function1> logger, IConfiguration configuration)
         {
             //_context = context;
             _logger = logger;
+            _configuration = configuration;
         }
 
         [Function("Function1")]
@@ -29,7 +31,7 @@ namespace BookMD
             
             //_logger.LogInformation("User count: {0}", userCount);
 
-            return new OkObjectResult(JsonConvert.SerializeObject(Environment.GetEnvironmentVariables()));
+            return new OkObjectResult(JsonConvert.SerializeObject(_configuration.AsEnumerable()));
         }
     }
 }
