@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace BookMD
 {
@@ -12,9 +14,9 @@ namespace BookMD
         private readonly IBookMdDbContext _context;
         private readonly ILogger<Function1> _logger;
 
-        public Function1(IBookMdDbContext context, ILogger<Function1> logger)
+        public Function1(/*IBookMdDbContext context, */ILogger<Function1> logger)
         {
-            _context = context;
+            //_context = context;
             _logger = logger;
         }
 
@@ -23,11 +25,11 @@ namespace BookMD
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-            var userCount = await _context.Users.CountAsync();
+            //var userCount = await _context.Users.CountAsync();
             
-            _logger.LogInformation("User count: {0}", userCount);
+            //_logger.LogInformation("User count: {0}", userCount);
 
-            return new OkObjectResult("Welcome to Azure Functions!");
+            return new OkObjectResult(JsonConvert.SerializeObject(Environment.GetEnvironmentVariables()));
         }
     }
 }

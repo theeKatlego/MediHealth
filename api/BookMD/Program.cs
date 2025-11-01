@@ -12,8 +12,8 @@ builder.ConfigureFunctionsWebApplication();
 //     .AddApplicationInsightsTelemetryWorkerService()
 //     .ConfigureFunctionsApplicationInsights();
 
-builder.Services
-    .AddApplication()
-    .AddInfrastructure(builder.Configuration);
+//builder.Services
+//    .AddApplication()
+//    .AddInfrastructure(builder.Configuration);
 
 builder.Build().Run();
