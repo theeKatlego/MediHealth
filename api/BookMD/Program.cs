@@ -1,19 +1,22 @@
 using Application;
 using BookMD.Infrastructure;
 using Microsoft.Azure.Functions.Worker.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-var builder = FunctionsApplication.CreateBuilder(args);
 
-builder.ConfigureFunctionsWebApplication();
+var host = new HostBuilder()
+    .ConfigureFunctionsWebApplication()
+    .ConfigureAppConfiguration(config =>
+    {
+        config.AddEnvironmentVariables();
+    })
+    .ConfigureServices((context, services) =>
+    {
+        services
+            .AddApplication()
+            .AddInfrastructure(context.Configuration);
+    })
+    .Build();
 
-// Application Insights isn't enabled by default. See https://aka.ms/AAt8mw4.
-// builder.Services
-//     .AddApplicationInsightsTelemetryWorkerService()
-//     .ConfigureFunctionsApplicationInsights();
-
-builder.Services
-    .AddApplication()
-    .AddInfrastructure(builder.Configuration);
-
-builder.Build().Run();
+host.Run();
