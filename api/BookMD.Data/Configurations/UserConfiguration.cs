@@ -9,7 +9,7 @@ namespace BookMD.Data.Configurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(x => x.Id);
-            //builder.HasPartitionKey(a => a.PartitionKey);
+            builder.HasPartitionKey(user => user.Role);
             builder.ToContainer("users");
             builder.HasNoDiscriminator();
         }

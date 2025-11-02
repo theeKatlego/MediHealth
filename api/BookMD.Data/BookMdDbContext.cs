@@ -3,6 +3,7 @@ using BookMD.Application.Abstractions.Messaging;
 using BookMD.Data.Configurations;
 using BookMD.Data.Models;
 using BookMD.Domain.Events;
+using BookMD.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookMD.Data
@@ -12,6 +13,7 @@ namespace BookMD.Data
         IDomainEventsDispatcher domainEventsDispatcher) : DbContext(options), IBookMdDbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

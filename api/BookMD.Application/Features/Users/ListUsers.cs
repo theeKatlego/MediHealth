@@ -8,7 +8,7 @@ namespace BookMD.Application.Features.Users
 {
     public sealed record ListUsersQuery() : IQuery<IEnumerable<UserDto>>;
 
-    internal sealed class ListUsersQueryHandler(IBookMdDbContext context) : IQueryHandler<ListUsersQuery, IEnumerable<UserDto>>
+    public sealed class ListUsersQueryHandler(IBookMdDbContext context) : IQueryHandler<ListUsersQuery, IEnumerable<UserDto>>
     {
         public async Task<Result<IEnumerable<UserDto>>> Handle(ListUsersQuery query, CancellationToken cancellationToken)
         {
