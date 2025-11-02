@@ -28,19 +28,13 @@ namespace BookMD.Infrastructure
 
         private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            string connectionString = configuration.GetConnectionString("BookMdConnectionString")!;
+            string connectionString = configuration["BookMdConnectionString"]!;
 
             services.AddDbContextFactory<BookMdDbContext>(optionsBuilder =>
               optionsBuilder
                 .UseCosmos(
                   connectionString: connectionString,
-                  databaseName: "bookmd",
-                  cosmosOptionsAction: options =>
-                  {
-                      options.ConnectionMode(Microsoft.Azure.Cosmos.ConnectionMode.Direct);
-                      options.MaxRequestsPerTcpConnection(16);
-                      options.MaxTcpConnectionsPerEndpoint(32);
-                  }));
+                  databaseName: "bookmd"));
 
             services.AddScoped<IBookMdDbContext>(sp => sp.GetRequiredService<BookMdDbContext>());
 
