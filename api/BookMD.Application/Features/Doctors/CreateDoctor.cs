@@ -7,25 +7,39 @@ using BookMD.Domain.Models;
 
 namespace BookMD.Application.Features.Doctors
 {
-    public sealed record CreateDoctorCommand(): ICommand<Result<UserDto>>;
+    public sealed record CreateDoctorCommand(
+        string email,
+        string firstName,
+        string lastName,
+        MedicalSpecialty Specialty,
+        decimal consultationFee): ICommand<UserDto>;
 
-    public sealed class CreateDoctor(IBookMdDbContext context) : ICommandHandler<CreateDoctorCommand, Result<UserDto>>
+    public sealed class CreateDoctorCommandHandler(IBookMdDbContext context) : ICommandHandler<CreateDoctorCommand, UserDto>
     {
-        public async Task<Result<Result<UserDto>>> Handle(CreateDoctorCommand command, CancellationToken cancellationToken)
+        public async Task<Result<UserDto>> Handle(CreateDoctorCommand command, CancellationToken cancellationToken)
         {
-            await context.Doctors.AddAsync(new Doctor {
-                ConsultationFee = 1,
-                Email = "test@mail.com",
-                FirstName = "John",
-                LastName = "Smith",
+            var doctor = new Doctor
+            {
+                ConsultationFee = command.consultationFee,
+                Email = command.email,
+                FirstName = command.firstName,
+                LastName = command.lastName,
                 Role = UserRole.Doctor,
-                Specialization = MedicalSpecialty.Dentistry,
+                Specialization = command.Specialty,
                 Id = Guid.NewGuid()
-            });
+            };
+
+            await context.Doctors.AddAsync(doctor);
 
             await context.SaveChangesAsync();
 
-            throw new NotImplementedException();
+            return new UserDto
+            {
+                Email = doctor.Email,
+                FirstName = doctor.FirstName,
+                LastName = doctor.LastName,
+                Id = doctor.Id
+            };
         }
     }
 }
