@@ -12,11 +12,19 @@ namespace BookMD.Application.Features.Doctors
         string firstName,
         string lastName,
         MedicalSpecialty Specialty,
-        decimal consultationFee): ICommand<UserDto>;
+        decimal consultationFee): ICommand<CreatedDoctorDto>;
 
-    public sealed class CreateDoctorCommandHandler(IBookMdDbContext context) : ICommandHandler<CreateDoctorCommand, UserDto>
+    public sealed record CreatedDoctorDto(
+        Guid id,
+        string email,
+        string firstName,
+        string lastName,
+        MedicalSpecialty Specialty,
+        decimal consultationFee);
+
+    public sealed class CreateDoctorCommandHandler(IBookMdDbContext context) : ICommandHandler<CreateDoctorCommand, CreatedDoctorDto>
     {
-        public async Task<Result<UserDto>> Handle(CreateDoctorCommand command, CancellationToken cancellationToken)
+        public async Task<Result<CreatedDoctorDto>> Handle(CreateDoctorCommand command, CancellationToken cancellationToken)
         {
             var doctor = new Doctor
             {
@@ -26,20 +34,21 @@ namespace BookMD.Application.Features.Doctors
                 LastName = command.lastName,
                 Role = UserRole.Doctor,
                 Specialization = command.Specialty,
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
+                PartitionKey = $"{UserRole.Doctor}-{command.Specialty}"
             };
 
-            await context.Doctors.AddAsync(doctor);
+            var result = await context.Doctors.AddAsync(doctor);
 
             await context.SaveChangesAsync();
 
-            return new UserDto
-            {
-                Email = doctor.Email,
-                FirstName = doctor.FirstName,
-                LastName = doctor.LastName,
-                Id = doctor.Id
-            };
+            return new CreatedDoctorDto(
+                result.Entity.Id,
+                result.Entity.Email,
+                result.Entity.FirstName,
+                result.Entity.LastName,
+                result.Entity.Specialization,
+                result.Entity.ConsultationFee);
         }
     }
 }

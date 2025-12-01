@@ -9,10 +9,6 @@ namespace BookMD.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Doctor> builder)
         {
-            builder.HasKey(doctor => doctor.Id);
-            builder.HasPartitionKey(doctor => doctor.Specialization);
-            builder.ToContainer("doctors");
-            builder.HasNoDiscriminator();
         }
     }
 }

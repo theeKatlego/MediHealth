@@ -2,11 +2,12 @@
 
 namespace BookMD.Data.Models
 {
-    public class User: BaseModel
+    public abstract class User: BaseModel
     {
         public required string Email { get; init; }
         public required string FirstName { get; init; }
         public required string LastName { get; init; }
         public required UserRole Role { get; init; }
-    }
+        public required string PartitionKey { get; init; }
+}
 }
